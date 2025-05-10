@@ -1,7 +1,7 @@
 import { useColorScheme } from '@/hooks/useColorScheme';
 import * as eva from '@eva-design/eva';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { ApplicationProvider } from '@ui-kitten/components';
+import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -12,6 +12,8 @@ export default function RootLayout() {
 	const colorScheme = useColorScheme();
 	const [loaded] = useFonts({
 		SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+		Borel: require('../assets/fonts/Borel-Regular.ttf'),
+		Roboto: require('../assets/fonts/RobotoCondensed-VariableFont_wght.ttf'),
 	});
 
 	if (!loaded) {
@@ -22,6 +24,9 @@ export default function RootLayout() {
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
+				<Layout style={{ alignItems: 'center' }}>
+					<Text category='h2' style={{ fontFamily: 'Borel', paddingTop: 20 }}>Greenify</Text>
+				</Layout>
 				<Stack>
 					<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 					<Stack.Screen name="+not-found" />
