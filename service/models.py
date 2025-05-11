@@ -13,3 +13,25 @@ class Plant(BaseModel):
 class Answer(BaseModel):
     description: str
     plants: list[Plant]
+
+
+class Benefit(BaseModel):
+    type: str = Field(description="Type of the environmental benefit")
+    amount: str = Field(description="How much percentage of improvement")
+    direction: bool = Field(description="True means increasing, False means decreasing")
+
+
+class Group(BaseModel):
+    users: list[str] = Field(
+        description="List at least 2 or more users with similar plant suggestions and how they can combine same job in term of place, activities and plantation"
+    )
+    description: list[str] = Field(
+        description="Short description of how these people match with each other"
+    )
+    benefits: list[Benefit] = Field(
+        description="How this combination helps benefit the environment with parameter, percentage value"
+    )
+
+
+class Community(BaseModel):
+    match: list[Group]
