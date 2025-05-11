@@ -1,9 +1,11 @@
 import ProgressSteps, { Content } from '@joaosousa/react-native-progress-steps';
-import { Button, Card, Layout, Text, useTheme } from '@ui-kitten/components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button, Card, Layout, Spinner, Text, useTheme } from '@ui-kitten/components';
 import { useCameraPermissions } from 'expo-camera';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
 
@@ -25,6 +27,7 @@ export default function Home() {
 	const [permission, requestPermission] = useCameraPermissions();
 	const theme = useTheme()
 	const { width } = useWindowDimensions()
+	const router = useRouter()
 
 	const [step, setStep] = useState(0);
 	const [cameraPermission, setCameraPermission] = useState(false)
@@ -35,6 +38,11 @@ export default function Home() {
 	const [cameraImage, setCameraImage] = useState<string | null>(null)
 	const [location, setLocation] = useState<null | [number, number, number]>(null)
 	const [communityShare, setCommunityShare] = useState(false)
+
+	useEffect(() => {
+		AsyncStorage.clear()
+	}, [])
+
 
 	const step2 = () => {
 		// Allow permissions
@@ -114,6 +122,15 @@ export default function Home() {
 		})
 	}
 
+	const step6 = () => {
+		AsyncStorage.setItem(
+			'user',
+			JSON.stringify([{ name: 'User', plants: plants?.plants.map(p => p.name) }])).then(() => {
+				setStep(step + 1)
+				router.navigate("/(tabs)/community")
+			})
+	}
+
 	return (
 		<Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
 			<ProgressSteps
@@ -155,7 +172,7 @@ export default function Home() {
 								) : (
 									<Text category='h6' style={{ fontFamily: 'Roboto', marginBottom: 10 }}>No image captured yet.</Text>
 								)}
-							<Button onPress={step4} size='small'>Fetch</Button>
+							{!loading ? <Button onPress={step4} size='small'>Fetch</Button> : <><Spinner /><Text>Greenifying</Text></>}
 						</Content>
 					},
 					{
@@ -185,7 +202,7 @@ export default function Home() {
 						title: <Text category='h6' style={{ fontFamily: 'Borel', color: theme['color-primary-default'] }}>Share with Community</Text>,
 						content: <Content>
 							<Text category='h6' style={{ fontFamily: 'Roboto', marginBottom: 10 }}>Sharing with community allows you to get help from friends, neighbours, locals, environmental activists and NGOs. You can get help greenifying the place from them which can make the process faster and creates happiness in a collective way</Text>
-							<Button onPress={() => setStep(step + 1)} size='small'>Done</Button>
+							<Button onPress={step6} size='small'>Go to Community</Button>
 						</Content>
 					}
 				]}

@@ -47,7 +47,6 @@
     "react-native-svg": "15.11.2",
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
-    "undefined": "react-native-mapbox-gl/maps",
     "expo-sqlite": "~15.2.9",
     "@react-native-async-storage/async-storage": "2.1.2"
   },
