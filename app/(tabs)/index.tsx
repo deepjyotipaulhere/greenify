@@ -91,7 +91,7 @@ export default function Home() {
 
 	const step4 = () => {
 		setLoading(true)
-		fetch("http://192.168.0.100:5000/answer", {
+		fetch("https://greenify-service-g0fre7fva8fxcmhs.centralindia-01.azurewebsites.net/answer", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
