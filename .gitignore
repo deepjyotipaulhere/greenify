@@ -41,3 +41,6 @@ app-example
 **/venv
 android/
 .vscode
+**/__pycache__
+/service/__pycache__
+*.pyc

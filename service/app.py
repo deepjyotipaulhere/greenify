@@ -1,12 +1,13 @@
 import base64
 import json
 import os
-
+import re
 import requests
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from models import Answer, Community
+from typing import Any, Dict
 
 load_dotenv()
 
@@ -55,10 +56,38 @@ def answer():
         },
     }
 
+    with open("req.json", "a") as f:
+        f.write(json.dumps(payload))
+
+    # try:
+    #     response = requests.post(url, headers=headers, json=payload)
+    #     response.raise_for_status()  # Raise an exception for bad status codes
+    #     return jsonify(json.loads(response.json()["choices"][0]["message"]["content"]))
+
+    # except requests.exceptions.RequestException as e:
+    #     print(f"API Request failed: {e}")
     try:
         response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()  # Raise an exception for bad status codes
-        return jsonify(json.loads(response.json()["choices"][0]["message"]["content"]))
+        print(response.text)
+        answer_text = response.text
+        text_cleaned = re.sub(
+            r"<think>.*?</think>\s*", "", answer_text, flags=re.DOTALL
+        )
+        json_match = re.search(r"{.*}", text_cleaned, re.DOTALL)
+        if json_match:
+            json_str = json_match.group(0)
+            try:
+                # Parse the JSON string
+                answer_data = json.loads(json_str)
+                print(answer_data)
+                return jsonify(
+                    json.loads(answer_data["choices"][0]["message"]["content"])
+                )
+
+            except json.JSONDecodeError as e:
+                return jsonify(json.loads(response.json()["choices"][0]["message"]["content"]))
+
+        # response.raise_for_status()
 
     except requests.exceptions.RequestException as e:
         print(f"API Request failed: {e}")
@@ -85,10 +114,52 @@ def community():
         },
     }
 
+    # try:
+    #     response = requests.post(url, headers=headers, json=payload)
+
+    #     answer_text = response.text
+    #     text_cleaned = re.sub(
+    #         r"<think>.*?</think>\s*", "", answer_text, flags=re.DOTALL
+    #     )
+    #     json_match = re.search(r"{.*}", text_cleaned, re.DOTALL)
+    #     if json_match:
+    #         json_str = json_match.group(0)
+    #         try:
+    #             # Parse the JSON string
+    #             answer_data = json.loads(json_str)
+    #             return jsonify(
+    #                 json.loads(answer_data["choices"][0]["message"]["content"])
+    #             )
+
+    #         except json.JSONDecodeError as e:
+    #             print("Error decoding JSON:", e)
+
+    #     # response.raise_for_status()
+
+    # except requests.exceptions.RequestException as e:
+    #     print(f"API Request failed: {e}")
     try:
         response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()  # Raise an exception for bad status codes
-        return jsonify(json.loads(response.json()["choices"][0]["message"]["content"]))
+        print(response.text)
+        answer_text = response.text
+        text_cleaned = re.sub(
+            r"<think>.*?</think>\s*", "", answer_text, flags=re.DOTALL
+        )
+        json_match = re.search(r"{.*}", text_cleaned, re.DOTALL)
+        if json_match:
+            json_str = json_match.group(0)
+            try:
+                # Parse the JSON string
+                answer_data = json.loads(json_str)
+                print(answer_data)
+                return jsonify(
+                    json.loads(answer_data["choices"][0]["message"]["content"])
+                )
+
+            except json.JSONDecodeError as e:
+                return jsonify(json.loads(response.json()["choices"][0]["message"]["content"]))
+
+        # response.raise_for_status()
 
     except requests.exceptions.RequestException as e:
         print(f"API Request failed: {e}")

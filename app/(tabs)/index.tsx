@@ -61,7 +61,7 @@ export default function Home() {
 			})
 		}
 
-		if (permission?.granted && Location.PermissionStatus.GRANTED)
+		if (Location.PermissionStatus.GRANTED === 'granted')
 			setStep(step + 1)
 	}
 
@@ -99,7 +99,8 @@ export default function Home() {
 
 	const step4 = () => {
 		setLoading(true)
-		fetch("https://greenify-service-g0fre7fva8fxcmhs.centralindia-01.azurewebsites.net/answer", {
+		// fetch("https://greenify-service-g0fre7fva8fxcmhs.centralindia-01.azurewebsites.net/answer", {
+		fetch("http://localhost:5000/answer", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
