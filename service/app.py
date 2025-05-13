@@ -6,7 +6,7 @@ import requests
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from models import Answer, Community
+from models import Answer1, Answer2, Community
 from typing import Any, Dict
 
 load_dotenv()
@@ -42,8 +42,7 @@ def answer():
                 "content": [
                     {
                         "type": "text",
-                        "text": f"Analyze this image and return short description of the place with respect to suitability of plant growth "
-                        "and suggest plants that can grow in this place having coordinates [{lat}, {lng}] and altitude {alt} and average weather condition of this place",
+                        "text": f"Analyze this image and return short description of the place with respect to suitability of plant growth ",
                     },
                     {"type": "image_url", "image_url": {"url": image}},
                 ],
@@ -52,12 +51,11 @@ def answer():
         "stream": False,
         "response_format": {
             "type": "json_schema",
-            "json_schema": {"schema": Answer.model_json_schema()},
+            "json_schema": {"schema": Answer1.model_json_schema()},
         },
     }
 
-    with open("req.json", "a") as f:
-        f.write(json.dumps(payload))
+    answer1 = {}
 
     # try:
     #     response = requests.post(url, headers=headers, json=payload)
@@ -80,12 +78,62 @@ def answer():
                 # Parse the JSON string
                 answer_data = json.loads(json_str)
                 print(answer_data)
+                answer1 = json.loads(answer_data["choices"][0]["message"]["content"])
+
+            except json.JSONDecodeError as e:
+                answer1 = json.loads(
+                    response.json()["choices"][0]["message"]["content"]
+                )
+
+        # response.raise_for_status()
+
+    except requests.exceptions.RequestException as e:
+        print(f"API Request failed: {e}")
+
+    payload_research = {
+        "model": "sonar-deep-research",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a plant growth expert. You are given a description of a place where an user want to grow some plants. You are also given latitude, longitude and altitude of the user. Your task is to suggest at most 5 plant that can be grown by the user in that particular place according to average weather.",
+            },
+            {
+                "role": "user",
+                "content": f"I am standing in a place having coordinates [{lat}, {lng}] and altitude {alt}]. The place can be described as follows: {answer1}"
+                "Suggest at most five suitable plants that can be grown here.",
+            },
+        ],
+        "stream": False,
+        "response_format": {
+            "type": "json_schema",
+            "json_schema": {"schema": Answer2.model_json_schema()},
+        },
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload_research)
+        print(response.text)
+        answer_text = response.text
+        text_cleaned = re.sub(
+            r"<think>.*?</think>\s*", "", answer_text, flags=re.DOTALL
+        )
+        json_match = re.search(r"{.*}", text_cleaned, re.DOTALL)
+        if json_match:
+            json_str = json_match.group(0)
+            try:
+                # Parse the JSON string
+                answer_data = json.loads(json_str)
+                print(answer_data)
                 return jsonify(
                     json.loads(answer_data["choices"][0]["message"]["content"])
+                    | answer1
                 )
 
             except json.JSONDecodeError as e:
-                return jsonify(json.loads(response.json()["choices"][0]["message"]["content"]))
+                return jsonify(
+                    json.loads(response.json()["choices"][0]["message"]["content"])
+                    | answer1
+                )
 
         # response.raise_for_status()
 
@@ -157,7 +205,9 @@ def community():
                 )
 
             except json.JSONDecodeError as e:
-                return jsonify(json.loads(response.json()["choices"][0]["message"]["content"]))
+                return jsonify(
+                    json.loads(response.json()["choices"][0]["message"]["content"])
+                )
 
         # response.raise_for_status()
 

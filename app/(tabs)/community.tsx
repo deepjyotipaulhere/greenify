@@ -31,6 +31,7 @@ export default function TabTwoScreen() {
 
 	const getUser = async () => {
 		const res = await fetch("https://greenify-service-g0fre7fva8fxcmhs.centralindia-01.azurewebsites.net/users", {
+		// const res = await fetch("http://localhost:5000/users", {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -51,6 +52,7 @@ export default function TabTwoScreen() {
 	const startMatching = async () => {
 		setLoading(true)
 		const res = await fetch("https://greenify-service-g0fre7fva8fxcmhs.centralindia-01.azurewebsites.net/community", {
+		// const res = await fetch("http://localhost:5000/community", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

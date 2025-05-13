@@ -44,3 +44,4 @@ android/
 **/__pycache__
 /service/__pycache__
 *.pyc
+service/__pycache__/models.cpython-310.pyc

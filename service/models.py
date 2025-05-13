@@ -10,8 +10,10 @@ class Plant(BaseModel):
     AR_model: str = Field(description="AR model URL for the plant")
 
 
-class Answer(BaseModel):
+class Answer1(BaseModel):
     description: str
+
+class Answer2(BaseModel):
     plants: list[Plant]
 
 
