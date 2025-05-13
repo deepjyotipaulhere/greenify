@@ -1,6 +1,7 @@
+import { Collapsible } from '@/components/Collapsible';
 import ProgressSteps, { Content } from '@joaosousa/react-native-progress-steps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, Card, Layout, Spinner, Text, useTheme } from '@ui-kitten/components';
+import { Button, Card, Layout, Text, useTheme } from '@ui-kitten/components';
 import { useCameraPermissions } from 'expo-camera';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
@@ -179,7 +180,7 @@ export default function Home() {
 										<Text category='h6' style={{ fontFamily: 'Roboto', marginBottom: 10 }}>No image captured yet.</Text>
 									)}
 								<Button onPress={step4} size='small' style={{ marginTop: 10, width: 300 }}>Start Greenify</Button>
-								{loading ? <Spinner /> : <></>}
+								{loading ? <Text>Loading...</Text> : <></>}
 							</Content>
 						},
 						{
@@ -197,6 +198,9 @@ export default function Home() {
 													<Text>
 														{plant.description}
 													</Text>
+													<Collapsible title='Plant care tips'>
+														{plant.care_instructions}
+													</Collapsible>
 												</Card>)
 										}
 									</ScrollView>

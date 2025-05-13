@@ -1,3 +1,5 @@
+![Greenify](assets/images/gallery.jpg)
+
 ## Inspiration
 
 The inspiration for Greenify stems from the growing need to address environmental challenges and promote sustainable living. With the rise of urbanization and technology, we wanted to create a platform that merges innovation with eco-consciousness. Greenify aims to empower individuals and communities to take actionable steps toward a greener future by leveraging technology to make sustainability accessible and engaging.
@@ -6,7 +8,6 @@ The inspiration for Greenify stems from the growing need to address environmenta
 
 Greenify is a mobile application designed to encourage and facilitate sustainable practices. It provides users with tools and resources to:
 
-- Track their carbon footprint and receive personalized recommendations to reduce it.
 - Participate in community-driven eco-friendly challenges and initiatives.
 - Access a curated library of tips, guides, and resources for sustainable living.
 - Connect with like-minded individuals through a community platform to share ideas and inspire action.
@@ -19,8 +20,8 @@ Greenify was built using the [Expo](https://expo.dev) framework, which allowed u
 
 - **Frontend**: React Native with Expo for building the user interface and ensuring a seamless user experience.
 - **Backend**: A Python-based service using Flask to handle data processing and API endpoints.
-- **Database**: SQLite for lightweight and efficient data storage.
-- **Design**: Custom themes and assets, including fonts and icons, to create a visually cohesive and engaging interface.
+- **Perplexity AI**: Using Perplexity AI's sonar-pro and sonar-deep-research models to classify image, plant suggestions based on image and coordinates by realtime research, creating a community by matching users of similar plant suggestions
+- **Design**: Using React Native UI Kitten for custom themes and assets, including fonts and icons, to create a visually cohesive and engaging interface.
 - **File-based routing**: Leveraging Expo's file-based routing system for intuitive navigation.
 - **Community features**: Implemented using React Native components and hooks for real-time interaction.
 
@@ -36,6 +37,7 @@ Building Greenify came with its share of challenges:
 ## Accomplishments that we're proud of
 
 - Successfully creating a fully functional cross-platform app within a limited timeframe.
+- Properly utilizing Perplexity AI's Sonar APIs for image classifications, plant suggestions and community creation
 - Designing an intuitive and visually appealing user interface that aligns with the app's eco-friendly theme.
 - Implementing community-driven features that foster collaboration and engagement among users.
 - Developing a robust backend service to handle data processing and API requests efficiently.
@@ -54,7 +56,6 @@ Throughout the development of Greenify, we gained valuable insights into:
 We have ambitious plans for the future of Greenify, including:
 
 - **Gamification**: Introducing rewards and badges to incentivize sustainable practices.
-- **AI-powered recommendations**: Leveraging machine learning to provide more personalized and accurate sustainability tips.
 - **Integration with IoT devices**: Enabling users to connect their smart home devices for real-time energy monitoring and optimization.
 - **Expanded community features**: Adding forums, events, and leaderboards to enhance user engagement.
 - **Localization**: Expanding the app's reach by supporting multiple languages and regional content.
