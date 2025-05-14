@@ -50,6 +50,7 @@ Throughout the development of Greenify, we gained valuable insights into:
 - Best practices for optimizing performance in mobile applications.
 - The importance of user-centric design in creating engaging and impactful applications.
 - Strategies for integrating community-driven features into a mobile app.
+- Extensive use of easy-to-use Sonar APIs by Perplexity AI
 
 ## What's next for Greenify
 
