@@ -64,7 +64,7 @@ Greenify is just the beginning of our journey toward creating a more sustainable
 
 
 ## How to run
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app). Also there is a ```/service``` folder in the root directory of the project which contains the Flask API for communicating between frontend and Perplexity API.
 
 1. Install dependencies
 
@@ -85,5 +85,19 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
+3. In another terminal navigate to ```/service``` folder and install dependencies
+```bash
+pip install -r requirements.txt
+```
+4. Set ```PPLX_API_KEY``` in ```.env``` file inside the ```/service``` folder (create ```.env``` file if doesn't exist)
+4. Run Flask app
+```bash
+python app.py
+```
+5. To open app in mobile
+##### Option 1
 * Install Expo Go app from Play Store or App Store
 * Scan the QR code shown in the terminal
+
+##### Option 2
+Open web browser in your smartphone and navigate to the URL shown in the console.
