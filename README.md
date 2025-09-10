@@ -24,6 +24,7 @@ Greenify was built using the [Expo](https://expo.dev) framework, which allowed u
 - **Design**: Using React Native UI Kitten for custom themes and assets, including fonts and icons, to create a visually cohesive and engaging interface.
 - **File-based routing**: Leveraging Expo's file-based routing system for intuitive navigation.
 - **Community features**: Implemented using React Native components and hooks for real-time interaction.
+- **Kiro**: Helping convert existing Perplexity code to Gemini while adhering spec-driven development methodologies, help testing and bug fixing
 
 ## Challenges we ran into
 
@@ -50,7 +51,7 @@ Throughout the development of Greenify, we gained valuable insights into:
 - Best practices for optimizing performance in mobile applications.
 - The importance of user-centric design in creating engaging and impactful applications.
 - Strategies for integrating community-driven features into a mobile app.
-- Extensive use of easy-to-use Sonar APIs by Perplexity AI
+- Extensive use of easy-to-use Sonar and Gemini APIs
 
 ## What's next for Greenify
 
